@@ -20,6 +20,8 @@ namespace Server_test
         public Form1()
         {
             InitializeComponent();
+            this.listBox3.MouseWheel += new MouseEventHandler(ListBox3_Scroll);
+            this.listBox4.MouseWheel += new MouseEventHandler(ListBox4_Scroll);
             clients = new List<Client>();
             isServerRun = false;
             T = new Thread(() => ServerLoop(1111));
@@ -243,18 +245,18 @@ namespace Server_test
                             vote.Add(message[1]);
                             vote.Remove(message[2]);
                         }
-                        if(vote.Count >= clients.Count)
+                        if (vote.Count >= clients.Count)
                         {
                             foreach (var w in wolfs)
                             {
-                                if(!w.client.Connected) wolfs.Remove(w);
+                                if (!w.client.Connected) wolfs.Remove(w);
                             }
                             foreach (var i in innocents)
                             {
                                 if (!i.client.Connected) wolfs.Remove(i);
                             }
                             Dictionary<string, int> vote_counter = new Dictionary<string, int>();
-                            
+
                             foreach (var w in wolfs)
                             {
                                 vote_counter.Add(w.nickname, 0);
@@ -263,15 +265,15 @@ namespace Server_test
                             {
                                 vote_counter.Add(i.nickname, 0);
                             }
-                            foreach(var v in vote)
+                            foreach (var v in vote)
                             {
                                 vote_counter[v]++;
                             }
                             int n = 0;
                             List<string> s = new List<string>();
-                            foreach(var v in vote_counter)
+                            foreach (var v in vote_counter)
                             {
-                                if(n < v.Value)
+                                if (n < v.Value)
                                 {
                                     s = new List<string>();
                                     s.Add(v.Key);
@@ -289,9 +291,9 @@ namespace Server_test
                             }
                             if (s.Count > 1)
                             {
-                                foreach(var c in clients)
+                                foreach (var c in clients)
                                 {
-                                    c.client.GetStream().Write(Encoding.UTF8.GetBytes("0⧫"+string.Join(", ", s)+$"님들이 {n}표로 동표입니다.◊"));
+                                    c.client.GetStream().Write(Encoding.UTF8.GetBytes("0⧫" + string.Join(", ", s) + $"님들이 {n}표로 동표입니다.◊"));
                                 }
                                 Invoke(new Action(() => listBox1.Items.Add(string.Join(", ", s) + $"님들이 {n}표로 동표입니다.")));
                             }
@@ -329,7 +331,7 @@ namespace Server_test
                                     Invoke(new Action(() => listBox1.Items.Add($"투표로 {s[0]}님이 선정되었습니다. {s[0]}님은 늑대가 아닙니다.")));
                                 }
                                 Delay(100);
-                                if(wolfs.Count == 0)
+                                if (wolfs.Count == 0)
                                 {
                                     foreach (var c in clients)
                                     {
@@ -490,7 +492,7 @@ namespace Server_test
             {
                 return 2;
             }
-            else if(people == 10)
+            else if (people == 10)
             {
                 Random r = new Random(Convert.ToInt32(DateTime.Now.Ticks % 1000));
                 return r.Next(2, 4);
@@ -557,9 +559,9 @@ namespace Server_test
                         wolfs.Add(clients[number]);
                         clients[number].client.GetStream().Write(Encoding.UTF8.GetBytes("6⧫" + wolf_word + "◊"));
                     }
-                    foreach(var client in clients)
+                    foreach (var client in clients)
                     {
-                        if(!wolfs.Contains(client))
+                        if (!wolfs.Contains(client))
                         {
                             innocents.Add(client);
                             client.client.GetStream().Write(Encoding.UTF8.GetBytes("6⧫" + innocent_word + "◊"));
@@ -577,7 +579,8 @@ namespace Server_test
                 else
                 {
                     MessageBox.Show("사람은 3명 이상 10명 이하여야 하며, 권장하는 플레이 인원은 4명 이상입니다.");
-                    Invoke(new Action(() => { 
+                    Invoke(new Action(() =>
+                    {
                         button4.Enabled = true;
                         button5.Enabled = false;
                     }));
@@ -586,7 +589,8 @@ namespace Server_test
             else
             {
                 MessageBox.Show("단어 목록을 추가해 주세요");
-                Invoke(new Action(() => {
+                Invoke(new Action(() =>
+                {
                     button4.Enabled = true;
                     button5.Enabled = false;
                 }));
@@ -650,10 +654,17 @@ namespace Server_test
         {
             if (e.KeyCode == Keys.Enter && textBox3.Text != "" && textBox4.Text != "")
             {
-                listBox3.Items.Add(textBox3.Text);
-                listBox4.Items.Add(textBox4.Text);
-                textBox3.Text = "";
-                textBox4.Text = "";
+                if (!textBox3.Text.Contains(',') && !textBox4.Text.Contains(','))
+                {
+                    listBox3.Items.Add(textBox3.Text);
+                    listBox4.Items.Add(textBox4.Text);
+                    textBox3.Text = "";
+                    textBox4.Text = "";
+                }
+                else
+                {
+                    MessageBox.Show("단어에는 쉼표(,)가 포함될 수 없습니다");
+                }
             }
         }
 
@@ -688,6 +699,73 @@ namespace Server_test
                 textBox3.Text = "";
                 textBox4.Text = "";
             }
+        }
+
+        private void button8_Click(object sender, EventArgs e)
+        {
+            listBox3.Items.Clear();
+            listBox4.Items.Clear();
+        }
+
+        private void button9_Click(object sender, EventArgs e)
+        {
+            if (openFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                StreamReader sr = new StreamReader(openFileDialog1.FileName);
+                string line = sr.ReadLine();
+                string[] data = line.Split(',');
+                while (!sr.EndOfStream)
+                {
+                    line = sr.ReadLine();
+                    data = line.Split(',');
+                    listBox3.Items.Add(data[0]);
+                    listBox4.Items.Add(data[1]);
+                }
+            }
+        }
+
+        private void button10_Click(object sender, EventArgs e)
+        {
+            saveFileDialog1.Filter = "CSV File(*.csv)|*.csv";
+            if(saveFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                using (System.IO.StreamWriter file = new System.IO.StreamWriter(saveFileDialog1.FileName,false, Encoding.GetEncoding("utf-8")))
+                {
+                    file.WriteLine("시민 단어, 늑대 단어");
+                    for (int i = 0; i < listBox3.Items.Count; i++)
+                    {
+                        file.WriteLine($"{listBox3.Items[i]},{listBox4.Items[i]}");
+                    }
+                }
+            }
+        }
+
+        private void ListBox3_Scroll(object sender, EventArgs e)
+        {
+            SetScroll(listBox3, listBox4);
+        }
+
+        private void ListBox4_Scroll(object sender, EventArgs e)
+        {
+            SetScroll(listBox4, listBox3);
+        }
+
+        private void SetScroll(ListBox source, ListBox target)
+        {
+            int scrollIndex = GetScrollPosition(source);
+            SetScrollPosition(target, scrollIndex);
+        }
+
+        private int GetScrollPosition(ListBox listBox)
+        {
+            // ListBox의 현재 스크롤 위치를 가져오는 로직 추가
+            return listBox.TopIndex;
+        }
+
+        private void SetScrollPosition(ListBox listBox, int scrollIndex)
+        {
+            // ListBox의 스크롤 위치를 설정하는 로직 추가
+            listBox.TopIndex = scrollIndex;
         }
     }
     class Client

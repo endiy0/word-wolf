@@ -51,6 +51,8 @@
             button8 = new Button();
             button9 = new Button();
             button10 = new Button();
+            openFileDialog1 = new OpenFileDialog();
+            saveFileDialog1 = new SaveFileDialog();
             groupBox1.SuspendLayout();
             SuspendLayout();
             // 
@@ -237,33 +239,37 @@
             // 
             // button8
             // 
-            button8.Enabled = false;
             button8.Location = new Point(1000, 618);
             button8.Name = "button8";
             button8.Size = new Size(196, 58);
             button8.TabIndex = 19;
-            button8.Text = "단어 편집툴";
+            button8.Text = "단어 전체 제거";
             button8.UseVisualStyleBackColor = true;
+            button8.Click += button8_Click;
             // 
             // button9
             // 
-            button9.Enabled = false;
             button9.Location = new Point(1202, 618);
             button9.Name = "button9";
             button9.Size = new Size(196, 58);
             button9.TabIndex = 20;
             button9.Text = "단어 불러오기";
             button9.UseVisualStyleBackColor = true;
+            button9.Click += button9_Click;
             // 
             // button10
             // 
-            button10.Enabled = false;
             button10.Location = new Point(1404, 618);
             button10.Name = "button10";
             button10.Size = new Size(182, 58);
             button10.TabIndex = 21;
             button10.Text = "단어 내보내기";
             button10.UseVisualStyleBackColor = true;
+            button10.Click += button10_Click;
+            // 
+            // openFileDialog1
+            // 
+            openFileDialog1.FileName = "openFileDialog1";
             // 
             // Form1
             // 
@@ -327,5 +333,7 @@
         private Button button8;
         private Button button9;
         private Button button10;
+        private OpenFileDialog openFileDialog1;
+        private SaveFileDialog saveFileDialog1;
     }
 }
