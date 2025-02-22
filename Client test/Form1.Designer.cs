@@ -56,7 +56,7 @@
             // 
             // button1
             // 
-            button1.Location = new Point(912, 43);
+            button1.Location = new Point(912, 39);
             button1.Name = "button1";
             button1.Size = new Size(200, 46);
             button1.TabIndex = 1;
@@ -66,7 +66,7 @@
             // 
             // button2
             // 
-            button2.Location = new Point(912, 120);
+            button2.Location = new Point(912, 122);
             button2.Name = "button2";
             button2.Size = new Size(200, 46);
             button2.TabIndex = 2;
@@ -92,7 +92,7 @@
             // 
             // textBox2
             // 
-            textBox2.Location = new Point(706, 47);
+            textBox2.Location = new Point(706, 46);
             textBox2.Name = "textBox2";
             textBox2.Size = new Size(200, 39);
             textBox2.TabIndex = 5;
@@ -100,7 +100,7 @@
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(706, 89);
+            label2.Location = new Point(706, 94);
             label2.Name = "label2";
             label2.Size = new Size(62, 32);
             label2.TabIndex = 6;
@@ -108,7 +108,7 @@
             // 
             // textBox3
             // 
-            textBox3.Location = new Point(706, 124);
+            textBox3.Location = new Point(706, 129);
             textBox3.Name = "textBox3";
             textBox3.Size = new Size(200, 39);
             textBox3.TabIndex = 7;
@@ -126,7 +126,7 @@
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new Point(706, 166);
+            label3.Location = new Point(706, 176);
             label3.Name = "label3";
             label3.Size = new Size(86, 32);
             label3.TabIndex = 9;
@@ -134,7 +134,7 @@
             // 
             // textBox4
             // 
-            textBox4.Location = new Point(706, 201);
+            textBox4.Location = new Point(706, 211);
             textBox4.Name = "textBox4";
             textBox4.Size = new Size(200, 39);
             textBox4.TabIndex = 10;
@@ -142,9 +142,9 @@
             // groupBox1
             // 
             groupBox1.Controls.Add(listBox2);
-            groupBox1.Location = new Point(706, 246);
+            groupBox1.Location = new Point(706, 283);
             groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(406, 474);
+            groupBox1.Size = new Size(406, 437);
             groupBox1.TabIndex = 11;
             groupBox1.TabStop = false;
             groupBox1.Text = "접속자";
@@ -154,7 +154,7 @@
             listBox2.FormattingEnabled = true;
             listBox2.Location = new Point(6, 38);
             listBox2.Name = "listBox2";
-            listBox2.Size = new Size(394, 420);
+            listBox2.Size = new Size(394, 388);
             listBox2.TabIndex = 0;
             listBox2.SelectedIndexChanged += listBox2_SelectedIndexChanged;
             // 

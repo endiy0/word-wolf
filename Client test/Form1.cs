@@ -135,7 +135,10 @@ namespace Client_test
                     }
                     else if (message[0] == "5")
                     {
-                        Invoke(new Action(() => listBox2.Items.Remove(message[1])));
+                        Invoke(new Action(() => {
+                            listBox2.Items.Remove(message[1]);
+                            button4.Enabled = false;
+                            }));
                     }
                     else if(message[0] == "6")
                     {
@@ -145,6 +148,7 @@ namespace Client_test
                     else if (message[0] == "8")
                     {
                         isGamestarted = false;
+                        Invoke(new Action(() => button4.Enabled = false));
                     }
                     else if (message[0] == "9")
                     {
