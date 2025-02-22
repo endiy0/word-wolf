@@ -1,4 +1,4 @@
-# chat-server
+# word-wolf
 word wolf using Tcplistener and Tcpclient
 
 needs lots of Thread
