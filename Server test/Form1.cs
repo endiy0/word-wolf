@@ -20,8 +20,6 @@ namespace Server_test
         public Form1()
         {
             InitializeComponent();
-            this.listBox3.MouseWheel += new MouseEventHandler(ListBox3_Scroll);
-            this.listBox4.MouseWheel += new MouseEventHandler(ListBox4_Scroll);
             clients = new List<Client>();
             isServerRun = false;
             T = new Thread(() => ServerLoop(1111));
@@ -709,17 +707,27 @@ namespace Server_test
 
         private void button9_Click(object sender, EventArgs e)
         {
+            openFileDialog1.Filter = "CSV File(*.csv)|*.csv";
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
-                StreamReader sr = new StreamReader(openFileDialog1.FileName);
-                string line = sr.ReadLine();
-                string[] data = line.Split(',');
-                while (!sr.EndOfStream)
+                try
                 {
-                    line = sr.ReadLine();
-                    data = line.Split(',');
-                    listBox3.Items.Add(data[0]);
-                    listBox4.Items.Add(data[1]);
+                    StreamReader sr = new StreamReader(openFileDialog1.FileName);
+                    string line = sr.ReadLine();
+                    if (line != "시민 단어, 늑대 단어")
+                        throw new Exception("오류");
+                    string[] data = line.Split(',');
+                    while (!sr.EndOfStream)
+                    {
+                        line = sr.ReadLine();
+                        data = line.Split(',');
+                        listBox3.Items.Add(data[0]);
+                        listBox4.Items.Add(data[1]);
+                    }
+                }
+                catch
+                {
+                    MessageBox.Show("이 프로그램과 맞지 않는 형식입니다.");
                 }
             }
         }
@@ -727,9 +735,9 @@ namespace Server_test
         private void button10_Click(object sender, EventArgs e)
         {
             saveFileDialog1.Filter = "CSV File(*.csv)|*.csv";
-            if(saveFileDialog1.ShowDialog() == DialogResult.OK)
+            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
             {
-                using (System.IO.StreamWriter file = new System.IO.StreamWriter(saveFileDialog1.FileName,false, Encoding.GetEncoding("utf-8")))
+                using (System.IO.StreamWriter file = new System.IO.StreamWriter(saveFileDialog1.FileName, false, Encoding.GetEncoding("utf-8")))
                 {
                     file.WriteLine("시민 단어, 늑대 단어");
                     for (int i = 0; i < listBox3.Items.Count; i++)
@@ -740,32 +748,16 @@ namespace Server_test
             }
         }
 
-        private void ListBox3_Scroll(object sender, EventArgs e)
+        private void button11_Click(object sender, EventArgs e)
         {
-            SetScroll(listBox3, listBox4);
+            Form2 form = new Form2(this);
+            form.Show();
         }
 
-        private void ListBox4_Scroll(object sender, EventArgs e)
+        public void DataAdd(string data1, string data2)
         {
-            SetScroll(listBox4, listBox3);
-        }
-
-        private void SetScroll(ListBox source, ListBox target)
-        {
-            int scrollIndex = GetScrollPosition(source);
-            SetScrollPosition(target, scrollIndex);
-        }
-
-        private int GetScrollPosition(ListBox listBox)
-        {
-            // ListBox의 현재 스크롤 위치를 가져오는 로직 추가
-            return listBox.TopIndex;
-        }
-
-        private void SetScrollPosition(ListBox listBox, int scrollIndex)
-        {
-            // ListBox의 스크롤 위치를 설정하는 로직 추가
-            listBox.TopIndex = scrollIndex;
+            listBox3.Items.Add(data1);
+            listBox4.Items.Add(data2);
         }
     }
     class Client

@@ -53,6 +53,7 @@
             button10 = new Button();
             openFileDialog1 = new OpenFileDialog();
             saveFileDialog1 = new SaveFileDialog();
+            button11 = new Button();
             groupBox1.SuspendLayout();
             SuspendLayout();
             // 
@@ -239,9 +240,10 @@
             // 
             // button8
             // 
+            button8.Font = new Font("Yu Gothic UI", 7F);
             button8.Location = new Point(1000, 618);
             button8.Name = "button8";
-            button8.Size = new Size(196, 58);
+            button8.Size = new Size(144, 58);
             button8.TabIndex = 19;
             button8.Text = "단어 전체 제거";
             button8.UseVisualStyleBackColor = true;
@@ -249,9 +251,10 @@
             // 
             // button9
             // 
-            button9.Location = new Point(1202, 618);
+            button9.Font = new Font("Yu Gothic UI", 7F);
+            button9.Location = new Point(1150, 618);
             button9.Name = "button9";
-            button9.Size = new Size(196, 58);
+            button9.Size = new Size(144, 58);
             button9.TabIndex = 20;
             button9.Text = "단어 불러오기";
             button9.UseVisualStyleBackColor = true;
@@ -259,9 +262,10 @@
             // 
             // button10
             // 
-            button10.Location = new Point(1404, 618);
+            button10.Font = new Font("Yu Gothic UI", 7F);
+            button10.Location = new Point(1300, 618);
             button10.Name = "button10";
-            button10.Size = new Size(182, 58);
+            button10.Size = new Size(142, 58);
             button10.TabIndex = 21;
             button10.Text = "단어 내보내기";
             button10.UseVisualStyleBackColor = true;
@@ -271,11 +275,23 @@
             // 
             openFileDialog1.FileName = "openFileDialog1";
             // 
+            // button11
+            // 
+            button11.Font = new Font("Yu Gothic UI", 7F);
+            button11.Location = new Point(1448, 618);
+            button11.Name = "button11";
+            button11.Size = new Size(138, 58);
+            button11.TabIndex = 22;
+            button11.Text = "단어 편집 툴";
+            button11.UseVisualStyleBackColor = true;
+            button11.Click += button11_Click;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(13F, 32F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1598, 692);
+            Controls.Add(button11);
             Controls.Add(button10);
             Controls.Add(button9);
             Controls.Add(button8);
@@ -335,5 +351,6 @@
         private Button button10;
         private OpenFileDialog openFileDialog1;
         private SaveFileDialog saveFileDialog1;
+        private Button button11;
     }
 }
