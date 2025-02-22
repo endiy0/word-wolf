@@ -228,7 +228,7 @@ namespace Server_test
                             s.Write(buffer, 0, buffer.Length);
                         }
                     }
-                    else if (message[0] == "7")
+                    else if (message[0] == "7" && isGameStarted)
                     {
                         if (message[2] == "")
                         {
@@ -237,6 +237,7 @@ namespace Server_test
                             {
                                 c.client.GetStream().Write(Encoding.UTF8.GetBytes($"0⧫{clients.Count}명중 {vote.Count}명이 투표했습니다.◊"));
                             }
+                            Invoke(new Action(() => listBox1.Items.Add($"{clients.Count}명중 {vote.Count}명이 투표했습니다.")));
                         }
                         else
                         {
@@ -286,12 +287,14 @@ namespace Server_test
                             foreach (var c in clients)
                             {
                                 c.client.GetStream().Write(Encoding.UTF8.GetBytes("9⧫◊"));
+                                Delay(100);
                             }
                             if (s.Count > 1)
                             {
                                 foreach (var c in clients)
                                 {
                                     c.client.GetStream().Write(Encoding.UTF8.GetBytes("0⧫" + string.Join(", ", s) + $"님들이 {n}표로 동표입니다.◊"));
+                                    Delay(100);
                                 }
                                 Invoke(new Action(() => listBox1.Items.Add(string.Join(", ", s) + $"님들이 {n}표로 동표입니다.")));
                             }
